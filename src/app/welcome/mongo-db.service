@@ -1,0 +1,26 @@
+import { Injectable } from '@angular/core';
+
+import { MongoClient, MongoClientOptions } from 'mongodb';
+
+
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class MongoDBService {
+  private uri = "mongodb+srv://<username>:<password>@cluster0.mongodb.net/test?retryWrites=true&w=majority";
+
+  constructor() {}
+
+  async connect() {
+    const client = new MongoClient(this.uri);
+    await client.connect();
+    console.log("Connected to MongoDB");
+    const db = client.db("test");
+    const collection = db.collection("devices");
+    // Perform actions on the collection object
+    await client.close();
+    console.log("Connection to MongoDB closed");
+  }
+}
